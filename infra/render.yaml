@@ -1,0 +1,39 @@
+# Render blueprint. Secrets are declared with sync:false so values are entered in the dashboard, never committed.
+services:
+  - type: web
+    name: releaseradar-api
+    runtime: docker
+    dockerfilePath: apps/api/Dockerfile
+    dockerContext: apps/api
+    healthCheckPath: /healthz
+    envVars:
+      - {key: ENV, value: prod}
+      - {key: FORWARDED_ALLOW_IPS, sync: false}
+      - {key: WEB_ORIGIN, sync: false}
+      - {key: DATABASE_URL, sync: false}
+      - {key: REDIS_URL, sync: false}
+      - {key: GITHUB_APP_ID, sync: false}
+      - {key: GITHUB_CLIENT_ID, sync: false}
+      - {key: GITHUB_CLIENT_SECRET, sync: false}
+      - {key: GITHUB_APP_PRIVATE_KEY, sync: false}
+      - {key: GITHUB_WEBHOOK_SECRET, sync: false}
+      - {key: ENCRYPTION_KEYS, sync: false}
+      - {key: ENCRYPTION_CURRENT_KEY_ID, sync: false}
+  - type: worker
+    name: releaseradar-worker
+    runtime: docker
+    dockerfilePath: apps/api/Dockerfile
+    dockerContext: apps/api
+    dockerCommand: celery -A app.workers.celery_app:celery_app worker --concurrency 2 --loglevel INFO
+    envVars:
+      - {key: ENV, value: prod}
+      - {key: WEB_ORIGIN, sync: false}
+      - {key: DATABASE_URL, sync: false}
+      - {key: REDIS_URL, sync: false}
+      - {key: GITHUB_APP_ID, sync: false}
+      - {key: GITHUB_CLIENT_ID, sync: false}
+      - {key: GITHUB_CLIENT_SECRET, sync: false}
+      - {key: GITHUB_APP_PRIVATE_KEY, sync: false}
+      - {key: GITHUB_WEBHOOK_SECRET, sync: false}
+      - {key: ENCRYPTION_KEYS, sync: false}
+      - {key: ENCRYPTION_CURRENT_KEY_ID, sync: false}

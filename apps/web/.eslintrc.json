@@ -1,0 +1,11 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "no-restricted-syntax": [
+      "error",
+      { "selector": "JSXAttribute[name.name='dangerouslySetInnerHTML']", "message": "Use lib/sanitize.ts; raw HTML injection is banned (CWE-79)." }
+    ],
+    "no-restricted-globals": ["error", "localStorage", "sessionStorage"]
+  },
+  "overrides": [{ "files": ["src/lib/sanitize.ts"], "rules": { "no-restricted-syntax": "off" } }]
+}

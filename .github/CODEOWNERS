@@ -1,0 +1,8 @@
+# Security-sensitive paths need an owner's review. Replace @OWNER with your GitHub handle/team.
+/apps/api/app/core/        @OWNER
+/apps/api/app/ingress/     @OWNER
+/apps/api/app/db/          @OWNER
+/apps/api/app/ai/          @OWNER
+/apps/web/src/middleware.ts @OWNER
+/apps/web/src/app/api/     @OWNER
+/.github/                  @OWNER

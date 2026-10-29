@@ -1,0 +1,11 @@
+@"
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+.idea/
+"@ | Out-File -FilePath .gitignore -Encoding utf8
